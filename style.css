@@ -1,0 +1,355 @@
+/* ==========================================
+   1. CSS ВАРИАБЛДАРЫ ЖАНА ТЕМАЛАР (THEMES)
+   ========================================== */
+:root {
+    --bg-main: #0f172a;
+    --card-bg: #1e293b;
+    --card-border: #334155;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --accent-color: #06b6d4;
+    --accent-hover: #0891b2;
+    
+    /* Элемент топторунун түстөрү */
+    --alkali-color: #ef4444;
+    --alkaline-earth-color: #f97316;
+    --transition-color: #eab308;
+    --nonmetal-color: #10b981;
+    --noble-color: #a855f7;
+    --halogen-color: #ec4899;
+}
+
+/* Жарык тема (Light theme) */
+[data-bs-theme="light"] {
+    --bg-main: #f8fafc;
+    --card-bg: #ffffff;
+    --card-border: #e2e8f0;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --accent-color: #0284c7;
+    --accent-hover: #0369a1;
+}
+
+/* ==========================================
+   2. НЕГИЗГИ СТИЛДЕР (GENERAL STYLES)
+   ========================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Outfit', sans-serif;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ==========================================
+   3. TAB CONTENT ANIMATION
+   ========================================== */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(10px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+/* ==========================================
+   4. GRID TALABY: Менделеев Таблицасы (CSS Grid)
+   ========================================== */
+.periodic-grid {
+    display: grid;
+    /* Responsive Grid: Экрандын көлөмүнө жараша колонкалар туураланат */
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 12px;
+    margin-top: 1.5rem;
+}
+
+.element-card {
+    background: var(--card-bg);
+    border: 2px solid var(--card-border);
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    /* Hover effect үчүн жылмакай анимация */
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Card Hover effect */
+.element-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--accent-color);
+    box-shadow: 0 10px 15px -3px rgba(6, 182, 212, 0.3);
+}
+
+.element-card .number {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-align: left;
+    font-weight: 600;
+}
+
+.element-card .symbol {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 4px 0;
+    color: var(--text-main);
+}
+
+.element-card .name {
+    font-size: 0.75rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--text-muted);
+}
+
+/* Элемент топторунун чек ара (border) түстөрү */
+.element-card.alkali { border-color: var(--alkali-color); }
+.element-card.alkaline-earth { border-color: var(--alkaline-earth-color); }
+.element-card.transition { border-color: var(--transition-color); }
+.element-card.nonmetal { border-color: var(--nonmetal-color); }
+.element-card.noble { border-color: var(--noble-color); }
+.element-card.halogen { border-color: var(--halogen-color); }
+
+/* ==========================================
+   5. FLEXBOX TALABY: Лаборатория жана Башкаруу
+   ========================================== */
+.lab-workspace {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Компьютерде 3 колонкалуу Flexbox/Grid жайгашуусу */
+@media (min-width: 992px) {
+    .lab-workspace {
+        display: grid;
+        grid-template-columns: 280px 1fr 300px;
+        align-items: start;
+    }
+}
+
+.drag-item {
+    cursor: grab;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.drag-item:active {
+    cursor: grabbing;
+    transform: scale(0.98);
+}
+
+.drop-zone {
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.drop-zone.drag-over {
+    background-color: rgba(6, 182, 212, 0.15);
+    border-style: solid !important;
+}
+
+/* Beaker (Колба & Реакция анимациясы) */
+.beaker-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.beaker {
+    width: 130px;
+    height: 170px;
+    border: 4px solid #94a3b8;
+    border-top: none;
+    border-radius: 0 0 24px 24px;
+    position: relative;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.liquid {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 0%;
+    background-color: var(--accent-color);
+    transition: height 0.6s ease, background-color 0.6s ease;
+}
+
+/* ==========================================
+   6. MODAL ЖАНА 3D АТОМ МОДЕЛИ
+   ========================================== */
+.element-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px);
+    justify-content: center;
+    align-items: center;
+    z-index: 1050;
+}
+
+.modal-content {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 16px;
+    max-width: 600px;
+    width: 90%;
+    position: relative;
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 1.75rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: color 0.2s ease;
+}
+
+.close-modal:hover {
+    color: var(--accent-color);
+}
+
+.modal-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+@media (min-width: 576px) {
+    .modal-layout {
+        display: grid;
+        grid-template-columns: 180px 1fr;
+    }
+}
+
+/* 3D Электрондук Орбита Анимациясы */
+.atom-3d-stage {
+    width: 140px;
+    height: 140px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.atom-nucleus {
+    width: 44px;
+    height: 44px;
+    background: radial-gradient(circle, #f59e0b, #ef4444);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #ffffff;
+    box-shadow: 0 0 15px #f59e0b;
+    z-index: 2;
+}
+
+.electron-orbit {
+    position: absolute;
+    border: 1px dashed var(--accent-color);
+    border-radius: 50%;
+    animation: spin linear infinite;
+}
+
+.electron {
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    background: #38bdf8;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #38bdf8;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ==========================================
+   7. RESPONSIVE DESIGN (MEDIA QUERIES)
+   ========================================== */
+/* Мобилдик телефондор үчүн (576px чейин) */
+@media (max-width: 575.98px) {
+    .periodic-grid {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 8px;
+    }
+
+    .element-card .symbol {
+        font-size: 1.35rem;
+    }
+
+    .element-card .name {
+        font-size: 0.65rem;
+    }
+
+    .filter-bar .btn {
+        font-size: 0.75rem;
+        padding: 4px 8px;
+    }
+}
+
+/* Планшеттер жана Орточо Экрандар үчүн (576px - 991px) */
+@media (min-width: 576px) and (max-width: 991.98px) {
+    .periodic-grid {
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    }
+}
+
+/* ==========================================
+   8. PRINT MODE (PDF экспорттоо үчүн)
+   ========================================== */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    #mass-calc, #mass-calc * {
+        visibility: visible;
+    }
+    #mass-calc {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+    header, footer, .btn, .quick-examples {
+        display: none !important;
+    }
+}
